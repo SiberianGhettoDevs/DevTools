@@ -50,6 +50,24 @@ public final class DateUtils {
                         .toDays();
     }
 
+    public static long fullWeeksBetween(Temporal startInclusive, Temporal endExclusive) {
+        // checking input arguments for null
+        checkArgsNonNull(
+                Set.of(
+                        ArgNameAndValue.of("startInclusive", startInclusive),
+                        ArgNameAndValue.of("endExclusive", endExclusive)
+                )
+        );
+
+        // getting duration between point in time
+        long daysBetween = Duration.between(startInclusive, endExclusive)
+                                    // getting 'positive' copy of duration
+                                    .abs()
+                                    // total number of days in the duration by dividing the number of seconds by 86400
+                                    .toDays();
+        return daysBetween / 7;
+    }
+
     private static final String METHOD_ARG_ERROR_FORMAT = "Method argument: '%s', error message: '%s'.";
 
     private static final String CODING_ERROR_NULL_FORMAT = "Object '%s' can not be null.";
